@@ -1,0 +1,148 @@
+# config/keywords.yaml
+# Central keyword registry by region and topic.
+# Used by all collectors — edit here to tune all sources at once.
+
+regions:
+  ahmedabad:
+    en:
+      - "Ahmedabad"
+      - "AMC"
+      - "BRTS"
+      - "Ahmedabad BJP"
+      - "Ahmedabad Congress"
+      - "Ahmedabad AAP"
+      - "Ahmedabad election"
+      - "Ahmedabad municipal"
+      - "Ahmedabad water supply"
+      - "Ahmedabad road"
+      - "Ahmedabad pollution"
+    hi:
+      - "अहमदाबाद"
+      - "अहमदाबाद बीजेपी"
+      - "अहमदाबाद चुनाव"
+      - "अहमदाबाद पानी"
+      - "अहमदाबाद विकास"
+    gu:
+      - "અમદાવાદ"
+      - "અમદાવાદ ભાજપ"
+      - "અમદાવાદ ચૂંટણી"
+      - "AMC"
+
+  sanand:
+    en:
+      - "Sanand"
+      - "Sanand GIDC"
+      - "Sanand factory"
+      - "Sanand MLA"
+      - "Sanand BJP"
+      - "Sanand Congress"
+      - "Sanand jobs"
+    hi:
+      - "सानंद"
+      - "सानंद विकास"
+      - "सानंद रोजगार"
+    gu:
+      - "સાણંદ"
+      - "સાણંદ ભાજપ"
+      - "સાણંદ GIDC"
+
+  gujarat_general:
+    en:
+      - "Gujarat BJP"
+      - "Gujarat Congress"
+      - "Gujarat AAP"
+      - "Gujarat election"
+      - "Bhupendra Patel"
+      - "Gujarat CM"
+      - "Gujarat government"
+      - "Gujarat inflation"
+      - "Gujarat unemployment"
+      - "Gujarat vikas"
+    hi:
+      - "गुजरात भाजपा"
+      - "गुजरात चुनाव"
+      - "गुजरात महंगाई"
+      - "गुजरात बेरोजगारी"
+    gu:
+      - "ગુજરાત ભાજપ"
+      - "ગુજરાત ચૂંટણી"
+
+topics:
+  corruption:
+    - "corruption"
+    - "scam"
+    - "bribe"
+    - "घोटाला"
+    - "भ्रष्टाचार"
+    - "ભ્રષ્ટાચાર"
+  infrastructure:
+    - "road"
+    - "water"
+    - "electricity"
+    - "bijli"
+    - "paani"
+    - "sewer"
+    - "sadak"
+  economy:
+    - "inflation"
+    - "mehengai"
+    - "unemployment"
+    - "berozgari"
+    - "rozgar"
+    - "price rise"
+  healthcare:
+    - "hospital"
+    - "doctor"
+    - "health"
+    - "aspatal"
+    - "swasthya"
+  education:
+    - "school"
+    - "college"
+    - "education"
+    - "shiksha"
+
+parties:
+  - BJP
+  - Congress
+  - INC
+  - AAP
+  - BSP
+  - NCP
+  - भाजपा
+  - कांग्रेस
+  - ભાજપ
+
+leaders:
+  gujarat:
+    - "Bhupendra Patel"
+    - "Amit Shah"
+    - "CR Paatil"
+    - "Arjun Modhwadia"
+    - "Jagdish Thakor"
+    - "Gopal Italia"
+
+news_sources:
+  rss:
+    divya_bhaskar:
+      - "https://www.divyabhaskar.co.in/rss-feed/"
+      - "https://www.divyabhaskar.co.in/rss-v1/dainik-bhaskar-gujarati-news-rss.xml"
+    times_of_india:
+      - "https://timesofindia.indiatimes.com/rssfeeds/-2128838597.cms"
+    the_hindu:
+      - "https://www.thehindu.com/news/cities/Ahmedabad/?service=rss"
+    sandesh:
+      - "https://sandesh.com/feed"
+    gujarat_samachar:
+      - "https://www.gujaratsamachar.com/rss/top-stories"
+
+nitter_instances:
+  - "https://nitter.poast.org"
+  - "https://nitter.privacydev.net"
+  - "https://nitter.net"
+
+youtube:
+  max_results: 20
+  max_comments: 100
+  max_transcript_chars: 10000
+  published_after_days: 60

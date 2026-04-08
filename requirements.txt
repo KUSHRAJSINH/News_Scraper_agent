@@ -1,0 +1,42 @@
+# ── Twitter / X ─────────────────────────────────────────────────────────────
+# tweepy removed — replaced by free Nitter RSS scraping
+feedparser==6.0.11
+
+# ── YouTube ──────────────────────────────────────────────────────────────────
+google-api-python-client==2.118.0
+google-auth==2.28.1
+youtube-transcript-api==0.6.2
+
+# ── Web scraping ─────────────────────────────────────────────────────────────
+beautifulsoup4==4.12.3
+requests==2.31.0
+playwright==1.43.0
+lxml==5.1.0
+fake-useragent==1.5.1
+
+# ── PDF parsing (ECI / Census data) ──────────────────────────────────────────
+pdfplumber==0.11.0
+
+# ── Data handling ─────────────────────────────────────────────────────────────
+pandas==2.2.1
+python-dotenv==1.0.1
+pyyaml==6.0.1
+schedule==1.2.1
+
+# ── Database ──────────────────────────────────────────────────────────────────
+# sqlite3 is in stdlib — no extra package needed
+
+# ── Sentiment / NLP ──────────────────────────────────────────────────────────
+transformers==4.40.0
+torch==2.2.2
+sentencepiece==0.2.0
+vaderSentiment==3.3.2
+
+# ── MCP Server ────────────────────────────────────────────────────────────────
+mcp[cli]==1.6.0
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+loguru==0.7.2
+tenacity==8.2.3
+tqdm==4.66.2
+feedparser
