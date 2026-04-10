@@ -40,3 +40,6 @@ loguru==0.7.2
 tenacity==8.2.3
 tqdm==4.66.2
 feedparser
+fastmcp==1.6.0
+streamlit
+mcp
