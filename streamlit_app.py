@@ -311,6 +311,7 @@ with st.sidebar:
             "🏠  Dashboard",
             "🗄️  Database",
             "⚙️  Run Collectors",
+            "📍  Regional Intelligence",
             "🔍  Search Data",
             "🔥  Trending Topics",
             "🧠  Sentiment Lab",
@@ -816,6 +817,65 @@ elif "Sentiment" in page:
             except:
                 pass
 
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PAGE 3.5 — Regional Intelligence (Dynamic Search)
+# ══════════════════════════════════════════════════════════════════════════════
+
+elif "Regional Intelligence" in page:
+    st.markdown("<div class='section-title'>📍 Regional Intelligence (Dynamic Scrape)</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-sub'>Enter any city or area name to perform a localized crawl across YouTube, Twitter, and News.</div>", unsafe_allow_html=True)
+
+    if not db_exists():
+        st.warning("⚠️ Database not found.")
+        st.stop()
+
+    with st.form("custom_area_form"):
+        area_input = st.text_input("Target City/Area Name", placeholder="e.g. Dholka, Bavla, Rajkot, Surat...")
+        submitted = st.form_submit_button("🔍 Start Local Intelligence Scrape")
+
+    if submitted:
+        if not area_input.strip():
+            st.warning("Please enter a city or area name.")
+        else:
+            st.info(f"🚀 Initializing intelligence gathering for: **{area_input}**")
+            
+            # Using progress bars for each stage
+            status_container = st.empty()
+            
+            try:
+                # 1. YouTube
+                status_container.markdown("⏳ Step 1/4: Scraping **YouTube** videos...")
+                from collectors.youtube_collector import run_custom as run_yt
+                yt_count = run_yt(area_input)
+                st.write(f"✅ YouTube: Found {yt_count} videos.")
+
+                # 2. Twitter
+                status_container.markdown("⏳ Step 2/4: Scraping **Twitter** trends...")
+                from collectors.twitter_collector import run_custom as run_tw
+                tw_count = run_tw(area_input)
+                st.write(f"✅ Twitter: Found {tw_count} tweets.")
+
+                # 3. News
+                status_container.markdown("⏳ Step 3/4: Filtering **News** RSS feeds...")
+                from collectors.news_scraper import run_custom as run_ns
+                ns_count = run_ns(area_input)
+                st.write(f"✅ News: Found {ns_count} related articles.")
+
+                # 4. Sentiment
+                status_container.markdown("⏳ Step 4/4: Running **Sentiment Analysis** on new data...")
+                from processors.sentiment_analyzer import run as run_sent
+                run_sent()
+                st.write("✅ Sentiment Analysis: Complete.")
+
+                status_container.success(f"🎊 Local intelligence gathered for **{area_input}**! Check the Database or Search tabs to view results.")
+                
+                if st.button("🔄 Refresh Dashboard"):
+                    st.rerun()
+
+            except Exception as e:
+                st.error(f"❌ Scrape failed: {e}")
+                st.exception(e)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE 7 — News Summary

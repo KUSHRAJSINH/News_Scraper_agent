@@ -185,5 +185,54 @@ Examples:
     logger.info("Orchestration complete.")
 
 
+def run_dynamic_scrape(area_name: str):
+    """Orchestrate collection across multiple sources for a custom city/area."""
+    logger.info(f"🚀 Starting Dynamic Regional Intelligence Scrape: {area_name}")
+    
+    # 1. YouTube
+    try:
+        from collectors.youtube_collector import run_custom as run_yt
+        run_yt(area_name)
+    except Exception as e:
+        logger.error(f"YouTube dynamic scrape failed: {e}")
+
+    # 2. Twitter
+    try:
+        from collectors.twitter_collector import run_custom as run_tw
+        run_tw(area_name)
+    except Exception as e:
+        logger.error(f"Twitter dynamic scrape failed: {e}")
+
+    # 3. News
+    try:
+        from collectors.news_scraper import run_custom as run_ns
+        run_ns(area_name)
+    except Exception as e:
+        logger.error(f"News dynamic scrape failed: {e}")
+
+    # 4. Sentiment Analysis
+    try:
+        from processors.sentiment_analyzer import run as run_sent
+        logger.info("Running sentiment analysis on new data...")
+        run_sent()
+    except Exception as e:
+        logger.error(f"Sentiment analysis failed: {e}")
+
+    logger.info(f"✅ Dynamic scrape for {area_name} complete.")
+
+
 if __name__ == "__main__":
-    main()
+    # Internal main with updated arg parsing
+    import argparse
+    parser = argparse.ArgumentParser(description="Political Campaign AI — Orchestrator")
+    parser.add_argument("--collector", choices=["twitter", "youtube", "news", "facebook", "public", "sentiment", "all"])
+    parser.add_argument("--init-db", action="store_true")
+    parser.add_argument("--check-db", action="store_true")
+    parser.add_argument("--custom-area", help="Run dynamic scrape for a specific city/area")
+    
+    args = parser.parse_args()
+    
+    if args.custom_area:
+        run_dynamic_scrape(args.custom_area)
+    else:
+        main()

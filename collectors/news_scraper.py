@@ -339,5 +339,51 @@ def run():
     logger.info(f"News scraper complete. Total articles: {total}")
 
 
+def run_custom(area_name: str):
+    """
+    Run news scraping for a specific custom area/city.
+    Filters existing RSS feeds for items mentioning the area name.
+    """
+    init_db()
+    total = 0
+    logger.info(f"=== Dynamic News Scrape: {area_name} ===")
+    
+    for source_name, config in NEWS_SOURCES.items():
+        # Fetch RSS but filter immediately by area name in title or description
+        raw_entries = []
+        for rss_url in config["rss_urls"]:
+            entries = fetch_rss(rss_url)
+            # Filter entries that mention the city name
+            filtered = [
+                e for e in entries 
+                if area_name.lower() in getattr(e, "title", "").lower() or 
+                   area_name.lower() in getattr(e, "summary", "").lower()
+            ]
+            raw_entries.extend(filtered)
+        
+        if not raw_entries:
+            continue
+
+        articles = []
+        seen_urls = set()
+        for entry in raw_entries[:15]:  # smaller cap for dynamic
+            a = normalize_entry(entry, source_name)
+            if not a["url"] or a["url"] in seen_urls: continue
+            seen_urls.add(a["url"])
+            
+            # Scrape body
+            body = scrape_article_body(a["url"], config["body_sel"], config.get("use_playwright", False))
+            a["content"] = body if body else a["summary"]
+            articles.append(a)
+            time.sleep(1)
+
+        if articles:
+            save_articles_to_db(articles, area_name)
+            total += len(articles)
+
+    logger.info(f"Dynamic news scrape for {area_name} complete: {total} articles.")
+    return total
+
+
 if __name__ == "__main__":
     run()

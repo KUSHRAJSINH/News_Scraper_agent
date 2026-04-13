@@ -43,3 +43,7 @@ feedparser
 fastmcp==1.6.0
 streamlit
 mcp
+vaderSentiment
+youtube-transcript-api
+langchain_groq
+openai

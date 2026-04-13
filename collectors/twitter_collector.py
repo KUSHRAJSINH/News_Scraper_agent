@@ -226,8 +226,7 @@ def run():
     cfg     = load_config()
     queries = build_queries(cfg)
 
-    # Default Nitter instances — expanded from 3 to 10 vs original
-    # Override by setting nitter_instances in keywords.yaml
+    # Default Nitter instances
     instances = cfg.get("nitter_instances", [
         "https://nitter.poast.org",
         "https://nitter.privacydev.net",
@@ -236,13 +235,9 @@ def run():
         "https://nitter.1d4.us",
         "https://nitter.kavin.rocks",
         "https://nitter.unixfox.eu",
-        "https://nitter.domain.glass",
-        "https://nitter.moomoo.me",
-        "https://nitter.it",
     ])
 
     grand_total = 0
-
     for region, q_list in queries.items():
         logger.info(f"=== Twitter/Nitter RSS: collecting {region} ===")
         count        = collect_region(region, q_list, instances)
@@ -251,6 +246,25 @@ def run():
         time.sleep(5)
 
     logger.info(f"Twitter/Nitter run complete. Total: {grand_total}")
+
+
+def run_custom(area_name: str):
+    """Run twitter collection for a specific custom area/city."""
+    init_db()
+    cfg = load_config()
+    instances = cfg.get("nitter_instances", ["https://nitter.poast.org", "https://nitter.privacydev.net", "https://nitter.net"])
+    
+    # Build common political search queries for the area
+    queries = [
+        f"{area_name} BJP",
+        f"{area_name} Congress",
+        f"{area_name} election",
+        f"{area_name} development"
+    ]
+    logger.info(f"=== Dynamic Twitter Scrape: {area_name} ===")
+    count = collect_region(area_name, queries, instances)
+    logger.info(f"Dynamic scrape for {area_name} complete: {count} tweets.")
+    return count
 
 
 if __name__ == "__main__":

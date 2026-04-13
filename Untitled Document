@@ -7,9 +7,22 @@ youtube video is avilable what if we can fetch youtube video content in text
 
 
 and here where we can add llm i mean insted of fucnctioncalling we make tools or mcp server for this ?
+
 and also tweet api i think does not working bcz we cant gethere news from tweet i mean single tweet is not find 
 
 and also sugges here like where we can use mcp server or tools 
 
 
 Fix → Replace tweepy with Nitter RSS scraping (completely free, no API needed):
+
+
+
+improvemnets :---
+add place input box 
+so we can direct search for this .
+tweet scrape from every where just important key word releted input box
+search query 
+analyze data with llm done 
+db add sentiment
+sentiment view for each 
+for news search we use db keyword not static in news summery like ahmedabad and etc 

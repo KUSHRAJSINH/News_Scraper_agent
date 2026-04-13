@@ -577,5 +577,25 @@ def run():
     logger.info(f"YouTube run complete. Total videos: {grand_total}")
 
 
+def run_custom(area_name: str):
+    """Run youtube collection for a specific custom area/city."""
+    if not YOUTUBE_API_KEY:
+        raise EnvironmentError("YOUTUBE_API_KEY not set in .env")
+    init_db()
+    cfg = load_config()
+    youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY, cache_discovery=False)
+    
+    # Simple search queries for the area
+    queries = [
+        f"{area_name} political news",
+        f"{area_name} development",
+        f"{area_name} election update"
+    ]
+    logger.info(f"=== Dynamic YouTube Scrape: {area_name} ===")
+    count = collect_region(youtube, area_name, queries, cfg)
+    logger.info(f"Dynamic scrape for {area_name} complete: {count} videos.")
+    return count
+
+
 if __name__ == "__main__":
     run()
