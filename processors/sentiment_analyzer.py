@@ -30,7 +30,9 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 GROQ_API_KEY   = os.getenv("GROQ_API_KEY", "")
 OPEN_ROUTER_API_KEY = os.getenv("OPEN_ROUTER_API_KEY", "")
 
-# ─── VADER (English, no model download) ───────────────────────────────────────
+# ─── VADER (English, no model download) ─────────
+# 
+# ──────────────────────────────
 
 _vader = None
 def get_vader():

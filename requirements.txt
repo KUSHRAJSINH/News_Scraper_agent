@@ -47,3 +47,4 @@ vaderSentiment
 youtube-transcript-api
 langchain_groq
 openai
+fastapi

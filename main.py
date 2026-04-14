@@ -185,40 +185,47 @@ Examples:
     logger.info("Orchestration complete.")
 
 
-def run_dynamic_scrape(area_name: str):
-    """Orchestrate collection across multiple sources for a custom city/area."""
-    logger.info(f"🚀 Starting Dynamic Regional Intelligence Scrape: {area_name}")
+def run_dynamic_scrape(area_name: str, nearby_areas: list = None):
+    """Orchestrate collection across multiple sources for a custom city/area and its surroundings."""
+    areas_to_scrape = [area_name]
+    if nearby_areas:
+        areas_to_scrape.extend(nearby_areas)
+        
+    logger.info(f"🚀 Starting Dynamic Regional Intelligence Scrape: {areas_to_scrape}")
     
-    # 1. YouTube
-    try:
-        from collectors.youtube_collector import run_custom as run_yt
-        run_yt(area_name)
-    except Exception as e:
-        logger.error(f"YouTube dynamic scrape failed: {e}")
+    for area in areas_to_scrape:
+        logger.info(f"--- Scraping data for: {area} ---")
+        
+        # 1. YouTube
+        try:
+            from collectors.youtube_collector import run_custom as run_yt
+            run_yt(area)
+        except Exception as e:
+            logger.error(f"YouTube dynamic scrape failed for {area}: {e}")
 
-    # 2. Twitter
-    try:
-        from collectors.twitter_collector import run_custom as run_tw
-        run_tw(area_name)
-    except Exception as e:
-        logger.error(f"Twitter dynamic scrape failed: {e}")
+        # 2. Twitter
+        try:
+            from collectors.twitter_collector import run_custom as run_tw
+            run_tw(area)
+        except Exception as e:
+            logger.error(f"Twitter dynamic scrape failed for {area}: {e}")
 
-    # 3. News
-    try:
-        from collectors.news_scraper import run_custom as run_ns
-        run_ns(area_name)
-    except Exception as e:
-        logger.error(f"News dynamic scrape failed: {e}")
+        # 3. News
+        try:
+            from collectors.news_scraper import run_custom as run_ns
+            run_ns(area)
+        except Exception as e:
+            logger.error(f"News dynamic scrape failed for {area}: {e}")
 
-    # 4. Sentiment Analysis
+    # 4. Sentiment Analysis (run once at the end)
     try:
         from processors.sentiment_analyzer import run as run_sent
-        logger.info("Running sentiment analysis on new data...")
+        logger.info("Running sentiment analysis on all new data...")
         run_sent()
     except Exception as e:
         logger.error(f"Sentiment analysis failed: {e}")
 
-    logger.info(f"✅ Dynamic scrape for {area_name} complete.")
+    logger.info(f"✅ Dynamic scrape for {areas_to_scrape} complete.")
 
 
 if __name__ == "__main__":
